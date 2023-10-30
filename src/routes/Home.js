@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import {getDependsOnOwnProps} from "react-redux/es/connect/wrapMapToProps";
 
-function Home() {
+function Home({toDos}) {
     const [text, setText] = useState("");
     function  onChange(e){
         setText(e.target.value);
@@ -18,13 +17,18 @@ function Home() {
                 <input type="text" value={text} onChange={onChange}/>
                 <button>Add</button>
             </form>
-            <ul></ul>
+            <ul>{JSON.stringify(toDos)}</ul>
         </>
     )
 }
 
-function getCurrentState( state, ownProps) {
-    console.log(state, ownProps);
+function mapStateToProps( state, ownProps ) {
+    return { toDos: state };
+    // console.log(state, ownProps);
 }
 
-export default connect(getCurrentState) (Home);
+function mapDispatchToProps (dispatch) {
+    console.log(dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (Home);
